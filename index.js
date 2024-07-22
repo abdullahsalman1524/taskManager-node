@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const tasks = require("./routes/tasks");
+const mainRouter = require("./routes/main");
 const connectDB = require("./db/conn");
 require("dotenv").config();
+require('express-async-errors');
 const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
@@ -11,6 +13,8 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 app.use(express.json());
 
 app.use("/api/v1/tasks", tasks);
+// jab b api/v1 pe request aay to main router ke pass jana ha
+app.use("/api/v1", mainRouter)
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
